@@ -10,6 +10,7 @@
 [![Build](https://img.shields.io/badge/build-none%20%C2%B7%20static-e87ba4?style=flat-square)](#site-at-a-glance)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222222?style=flat-square&logo=github&logoColor=white)](https://pages.github.com/)
 [![Bilingual](https://img.shields.io/badge/i18n-EN%20%C2%B7%20%E4%B8%AD%E6%96%87-2563EB?style=flat-square)](#site-at-a-glance)
+[![Licence](https://img.shields.io/badge/license-MIT-7C3AED?style=flat-square)](LICENSE)
 
 [![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/Social-AI-2026/Groundbench-codebase)
 [![Dataset](https://img.shields.io/badge/Project-%F0%9F%A4%97%20GroundBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Social-AI-2026/GroundBench)
@@ -173,6 +174,6 @@ Citation metadata for the benchmark is in the code release
 ([CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)); the
 associated manuscript remains under anonymous review, so no DOI or public paper URL is asserted here.
 
-A licence for this repository is **not yet chosen**. The code release is under the non-commercial
-[GroundBench Peer-Review Research License](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/LICENSE),
-and COCO, RefCOCO-family material, and any figure sources retain their own terms.
+This repository is released under the [MIT License](LICENSE), as is the
+[code release](https://github.com/Social-AI-2026/Groundbench-codebase). COCO, RefCOCO-family
+material, and any figure sources are **not** covered by it and retain their own terms.

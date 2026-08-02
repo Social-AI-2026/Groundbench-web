@@ -10,6 +10,7 @@
 [![Build](https://img.shields.io/badge/build-%E6%97%A0%20%C2%B7%20%E7%BA%AF%E9%9D%99%E6%80%81-e87ba4?style=flat-square)](#站点一览)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222222?style=flat-square&logo=github&logoColor=white)](https://pages.github.com/)
 [![Bilingual](https://img.shields.io/badge/i18n-EN%20%C2%B7%20%E4%B8%AD%E6%96%87-2563EB?style=flat-square)](#站点一览)
+[![Licence](https://img.shields.io/badge/license-MIT-7C3AED?style=flat-square)](LICENSE)
 
 [![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/Social-AI-2026/Groundbench-codebase)
 [![Dataset](https://img.shields.io/badge/Project-%F0%9F%A4%97%20GroundBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Social-AI-2026/GroundBench)
@@ -147,4 +148,4 @@ uploads/          页面链接的论文 PDF
 
 基准的引用元数据在代码发布包里（[CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)）。关联稿件仍在匿名评审期，因此本文档不虚构 DOI 或公开论文链接。
 
-本仓库的许可**尚未确定**。代码发布采用非商业的 [GroundBench Peer-Review Research License](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/LICENSE)；COCO、RefCOCO 系列材料以及任何图的来源，仍适用各自条款。
+本仓库采用 [MIT License](LICENSE)，[代码发布](https://github.com/Social-AI-2026/Groundbench-codebase)同样如此。COCO、RefCOCO 系列材料以及任何图的来源**不在其覆盖范围内**，仍适用各自条款。
