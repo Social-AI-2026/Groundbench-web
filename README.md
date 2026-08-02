@@ -45,7 +45,7 @@ reference targets are released as
 | **Dependencies** | Zero; nothing is fetched at runtime |
 | **Hosting** | GitHub Pages from `main`, with `.nojekyll` |
 | **Languages** | English in the markup, 中文 in `i18n.js`, switched in the nav |
-| **Source of numbers** | `results.js`, transcribed from the frozen protocol — never typed into markup |
+| **Source of numbers** | `results.js` for tables and charts; figures quoted in prose live in the markup |
 
 ## 🔄 How a Change Reaches the Site
 
@@ -151,9 +151,13 @@ uploads/          the paper PDF the pages link to
 .nojekyll         tells GitHub Pages to serve the files unprocessed
 ```
 
-**Updating results.** Everything reads from `results.js`. Add a configuration to `GB.configs` (id,
-name, vendor, colour) and a matching key in each budget block of `GB.table1`, plus `GB.selcon.data`
-and `GB.slices.data` if you have the diagnostics. Nothing else needs to change.
+**Updating results.** Tables and charts read from `results.js`. Add a configuration to `GB.configs`
+(id, name, vendor, colour) and a matching key in each budget block of `GB.table1`, plus
+`GB.selcon.data` and `GB.slices.data` if you have the diagnostics.
+
+Figures quoted in prose are a separate matter. They are written into the markup — `<b>520
+characters</b>`, `<b>7.5 / 4.2</b>`, `<b>148 / 1,500</b>` and the like — and have to be changed
+there, in both languages. `GB.facts` is exported but no page reads it, so editing it changes nothing.
 
 ## 🔬 Scope and Limitations
 
