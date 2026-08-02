@@ -23,7 +23,7 @@
 
 **GroundBench** 要求视觉语言系统把指代表达描述的目标**画成一个多边形**，且顶点数是给定的。给定图像、指代表达和顶点数 N，模型必须返回恰好 N 个有序顶点，也就是 2N 个数值。同一批 1,500 个项目会在五个顶点预算下各问一遍，图像、短语和指代对象保持不变，变的只有作答面。
 
-本仓库**只是项目主页**。评测代码在 [Groundbench-codebase](https://github.com/Social-AI-2026/Groundbench-codebase)，题目与参考答案作为冻结发布在 [`Social-AI-2026/Groundbench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench)。
+本仓库**只是项目主页**。评测代码在 [Groundbench-codebase](https://github.com/Social-AI-2026/Groundbench-codebase)，题目与参考答案作为冻结发布在 [`Social-AI-2026/GroundBench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench)。
 
 > **范围：**本仓库只承载展示层——页面结构、样式，以及页面用到的图。</br>
 > 它不跑任何评测、不含任何基准数据，**也不是**页面上任何一个数字的权威来源。

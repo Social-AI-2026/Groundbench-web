@@ -29,7 +29,7 @@ five budgets, so only the answer surface changes while image, phrase, and refere
 This repository is the **project site** only. The evaluation code lives in
 [Groundbench-codebase](https://github.com/Social-AI-2026/Groundbench-codebase) and the questions and
 reference targets are released as
-[`Social-AI-2026/Groundbench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench).
+[`Social-AI-2026/GroundBench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench).
 
 > **Scope:** this repository carries presentation only — markup, styles, and the figures the page
 > shows.</br>

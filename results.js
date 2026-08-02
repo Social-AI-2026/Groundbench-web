@@ -1,4 +1,4 @@
-/* GROUNDINGBENCH — all numbers transcribed from the paper (Tables 1–5, §3.2, §4).
+/* GROUNDBENCH — all numbers transcribed from the paper (Tables 1–5, §3.2, §4).
    Every metric pair is [fixed, parseable-only]. Scores are 0–100. */
 window.GB = (function () {
   const configs = [
