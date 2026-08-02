@@ -12,7 +12,7 @@
 [![Bilingual](https://img.shields.io/badge/i18n-EN%20%C2%B7%20%E4%B8%AD%E6%96%87-2563EB?style=flat-square)](#site-at-a-glance)
 
 [![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/Social-AI-2026/Groundbench-codebase)
-[![Dataset](https://img.shields.io/badge/Project-%F0%9F%A4%97%20GroundBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Social-AI-2026/Groundbench)
+[![Dataset](https://img.shields.io/badge/Project-%F0%9F%A4%97%20GroundBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Social-AI-2026/GroundBench)
 
 [English](./README.md) | [中文文档](./README-ZH.md)
 
@@ -28,7 +28,7 @@ five budgets, so only the answer surface changes while image, phrase, and refere
 This repository is the **project site** only. The evaluation code lives in
 [Groundbench-codebase](https://github.com/Social-AI-2026/Groundbench-codebase) and the questions and
 reference targets are released as
-[`Social-AI-2026/Groundbench`](https://huggingface.co/datasets/Social-AI-2026/Groundbench).
+[`Social-AI-2026/Groundbench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench).
 
 > **Scope:** this repository carries presentation only — markup, styles, and the figures the page
 > shows.</br>
@@ -43,8 +43,8 @@ reference targets are released as
 | **Build step** | None — files are served exactly as committed |
 | **Dependencies** | Zero; nothing is fetched at runtime |
 | **Hosting** | GitHub Pages from `main`, with `.nojekyll` |
-| **Languages** | English and 中文, switched in the page |
-| **Source of numbers** | The frozen protocol in the code release, never hand-typed |
+| **Languages** | English in the markup, 中文 in `i18n.js`, switched in the nav |
+| **Source of numbers** | `results.js`, transcribed from the frozen protocol — never typed into markup |
 
 ## 🔄 How a Change Reaches the Site
 
@@ -56,13 +56,17 @@ reference targets are released as
 
 ## 📦 What Is on the Page
 
-| Section | Role |
-|---------|------|
-| Task | What an exact-N polygon answer is, and why a four-number box cannot express it |
-| Leaderboard | Frontier hosted configurations under one frozen protocol |
-| Budgets | How results move across the five vertex budgets, paired on identical items |
-| Cohort | What the 1,500 questions are made of — source family, semantic group, distractors, contour complexity, relative scale |
-| Resources | Links to the code release, the dataset card, and the citation |
+Three pages, all bilingual through the nav toggle:
+
+| Page | What it is |
+|------|-----------|
+| `index.html` | Project page — the gap, the task, canonical targets, cohort, results, findings, run/cite |
+| `explorer.html` | Every table from the paper (T1–T5), sliceable |
+| `playground.html` | Place exactly *N* vertices yourself and score your contour against G<sub>N</sub> |
+
+> Every figure is **drawn live in `<canvas>`** from the paper's own algorithm and numbers — there are
+> no static figure images to keep in sync. The hero cycles each referent across N ∈ {8, 16, 64}, and
+> the task and target figures let you pick the referent.
 
 ## 🚀 Quick Start
 
@@ -118,7 +122,7 @@ with `_` survive and nothing is run through Jekyll.
 Every score shown on the page is produced by the frozen evaluation protocol in the
 [code release](https://github.com/Social-AI-2026/Groundbench-codebase). The questions and reference
 targets are the frozen materials published on the
-[dataset repository](https://huggingface.co/datasets/Social-AI-2026/Groundbench), which itself
+[dataset repository](https://huggingface.co/datasets/Social-AI-2026/GroundBench), which itself
 carries **no model outputs and no scores** — it is the questions and the reference targets, not
 anyone's results.
 
@@ -129,13 +133,26 @@ anyone's results.
 ## 🗂️ Repository Map
 
 ```text
-index.html      page structure and copy for both languages
-styles.css      styles
-app.js          rendering and in-page navigation
-i18n.js         language toggle and the EN / 中文 string tables
-figures/        figures exported from the paper
-.nojekyll       tells GitHub Pages to serve the files unprocessed
+index.html        project page
+explorer.html     every paper table, sliceable
+playground.html   trace a contour yourself and score it
+
+results.js        all paper numbers as `window.GB` — every metric is [fixed, parseable-only]
+poly.js           geometry kit: source contours, exact-N construction, raster IoU, canvas drawing
+shapes.js         the four referent silhouettes shared by every figure and the playground
+i18n.js           EN + 中文 dictionary and the data-t / data-th runtime
+app.js            index page: nav, scroll-spy, hero and figure canvases, charts, leaderboard
+explorer.js       explorer tables and charts
+playground.js     tracing interaction, legality checks, scoring
+styles.css        theme — box amber, canonical target mint, model prediction coral
+
+uploads/          the paper PDF the pages link to
+.nojekyll         tells GitHub Pages to serve the files unprocessed
 ```
+
+**Updating results.** Everything reads from `results.js`. Add a configuration to `GB.configs` (id,
+name, vendor, colour) and a matching key in each budget block of `GB.table1`, plus `GB.selcon.data`
+and `GB.slices.data` if you have the diagnostics. Nothing else needs to change.
 
 ## 🔬 Scope and Limitations
 

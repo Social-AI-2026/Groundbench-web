@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trace it yourself — GroundBench</title>
+<meta name="description" content="Place exactly N vertices around a referent and score your contour against the canonical exact-N target under the same rasteriser the benchmark uses." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=gb2" />
+<style>
+#pg-canvas{width:100%;height:min(62vh,600px);display:block;cursor:crosshair;touch-action:none}
+.score{display:grid;grid-template-columns:auto 1fr;gap:0 20px;align-items:end;margin-bottom:6px}
+.score .big{font-family:var(--disp);font-weight:700;font-size:clamp(46px,7vw,74px);line-height:.86;letter-spacing:-.04em;color:var(--ref);font-variant-numeric:tabular-nums}
+.score .big.bad{color:var(--pred)}
+.score .cap{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);padding-bottom:6px}
+.flags{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.flag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--line-2);border-radius:100px;color:var(--dim);white-space:nowrap}
+.flag.ok{color:var(--ref);border-color:rgba(77,227,193,.42)}
+.flag.no{color:var(--pred);border-color:rgba(255,107,87,.45)}
+.tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.tool{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:8px 13px;border:1px solid var(--line-2);background:var(--panel);color:var(--muted);border-radius:var(--r);cursor:pointer;transition:.15s;white-space:nowrap}
+.tool:hover{color:var(--ink);border-color:var(--dim)}
+.tool.pri{background:var(--ref);border-color:var(--ref);color:#04120E}
+.pgwrap{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:clamp(18px,2.6vw,32px);align-items:start}
+.stage.drop{outline:1px dashed var(--ref);outline-offset:-6px}
+.cursorhint{position:absolute;transform:translate(-50%,-190%);font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:rgba(7,9,11,.94);border:1px solid var(--line-2);color:var(--ink);padding:5px 10px;border-radius:100px;pointer-events:none;white-space:nowrap;z-index:5}
+.cursorhint b{color:var(--ref);font-weight:700}
+.cursorhint i{display:block;font-style:normal;font-size:9.5px;font-weight:400;color:var(--dim);letter-spacing:.06em;margin-top:2px}
+#pg-coords{font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--ink-2);word-break:break-all;max-height:96px;overflow-y:auto}
+@media (max-width:1000px){.pgwrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <svg class="brand-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true"><polygon points="12,2 21,8 18,19 6,19 3,8" stroke="#4DE3C1" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="2" r="1.9" fill="#4DE3C1"/><circle cx="21" cy="8" r="1.9" fill="#4DE3C1"/><circle cx="18" cy="19" r="1.9" fill="#4DE3C1"/><circle cx="6" cy="19" r="1.9" fill="#4DE3C1"/><circle cx="3" cy="8" r="1.9" fill="#4DE3C1"/></svg>
+      <span class="wm"><span>Ground</span><b>Bench</b></span>
+    </a>
+    <button class="nav-burger" id="burger" aria-label="Menu">≡</button>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="index.html#gap" data-t="nav.gap">Overview</a></li>
+      <li><a href="index.html#task" data-t="nav.task">Task</a></li>
+      <li><a href="index.html#results" data-t="nav.results">Results</a></li>
+      <li><a href="index.html#cite" data-t="nav.cite">Cite</a></li>
+      <li><a class="np on" href="playground.html" data-t="nav.try">Try it</a></li>
+      <li><a class="np" href="explorer.html" data-t="nav.explorer">Explorer</a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="zh">中</button>
+    </div>
+    <div class="nav-icons">
+      <a href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener" aria-label="Code"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.16c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg></a>
+      <a href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener" aria-label="Dataset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6"/><path d="M4.5 11.5v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="blk" style="padding-top:112px;padding-bottom:clamp(40px,5vw,64px)">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tick">▲</span> <span data-t="pg.eyebrow">Interactive · the tracing half of the task</span></div>
+    <div class="shead"><span class="snum">▸</span><h2 data-t="pg.title">Trace it yourself</h2></div>
+    <p class="sdek" style="margin-bottom:clamp(22px,3vw,34px)" data-th="pg.dek">Grounding asks a model to <em>find</em> the referent and then <em>trace</em> it. Here the referent is already given to you — this is only the second half, and it is still hard. Place exactly <strong>N vertices</strong> around the shaded region. Your contour is rasterised and scored against the canonical exact-<em>N</em> target by the same policy the benchmark uses.</p>
+
+    <div class="pgwrap">
+      <div>
+        <div class="stage" id="pg-stage">
+          <canvas id="pg-canvas"></canvas>
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="stage-tag" id="pg-tag">uid 0417 · “the zebra behind the fence”</div>
+          <div class="stage-hud"><span id="pg-left">8 vertices remaining</span><span id="pg-hint">click to place</span></div>
+          <div class="cursorhint" id="pg-float" hidden></div>
+        </div>
+        <div class="chiprow" style="margin-top:16px;margin-bottom:0">
+          <div class="chipset" id="pg-shape"><span class="lbl" data-t="ui.referent">Referent</span></div>
+        </div>
+        <div class="chiprow" style="margin-top:12px;margin-bottom:0">
+          <div class="chipset" id="pg-budget"><span class="lbl" data-t="ui.budget">Budget</span></div>
+        </div>
+        <div class="legend">
+          <span><i style="border-color:rgba(255,255,255,.35)"></i><span data-t="lg.region">Referent region</span></span>
+          <span><i style="border-color:#4DE3C1"></i><span data-th="lg.target">Canonical target G<sub>N</sub></span></span>
+          <span><i style="border-color:#FF6B57"></i><span data-t="lg.you">Your polygon</span></span>
+        </div>
+        <div class="tools">
+          <button class="tool pri" id="pg-new" data-t="pg.new">New referent</button>
+          <button class="tool" id="pg-undo" data-t="pg.undo">Undo</button>
+          <button class="tool" id="pg-clear" data-t="pg.clear">Clear</button>
+          <button class="tool" id="pg-reveal" data-t="pg.reveal">Show target</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel panel-pad">
+          <div class="score"><div class="big" id="pg-iou">—</div><div class="cap" data-th="pg.iou.cap">IoU × 100 vs G<sub>N</sub></div></div>
+          <p class="figcap" id="pg-verdict" style="margin-top:14px" data-t="pg.idle">Place all N vertices to score. Start point and direction are free — filled-mask IoU is invariant to cyclic shift and reversal.</p>
+          <div class="flags" id="pg-flags">
+            <span class="flag" id="fl-count" data-t="pg.fl.count">exact length</span>
+            <span class="flag" id="fl-simple" data-t="pg.fl.simple">simple polygon</span>
+            <span class="flag" id="fl-area" data-t="pg.fl.area">positive area</span>
+            <span class="flag" id="fl-dupe" data-t="pg.fl.dupe">distinct vertices</span>
+          </div>
+          <div style="border-top:1px solid var(--line);padding-top:18px;margin-top:4px">
+            <div class="lbl" style="margin-bottom:14px" data-t="pg.vs">You vs the hosted configurations at this budget</div>
+            <div class="bars" id="pg-bars"></div>
+            <p class="note" style="margin-top:14px"><span class="sym">▸</span> <span data-t="pg.note">Model scores are the paper's fixed-denominator IoU² over 1,500 real RefCOCO-family questions. Yours is one synthetic contour with the referent already revealed — a generous comparison, and the point of the exercise.</span></p>
+          </div>
+        </div>
+
+        <div class="code" style="margin-top:16px">
+          <div class="code-hd"><span>response · 2N integers</span><button class="copy" data-copy="#pg-coords" data-t="ui.copy">Copy</button></div>
+          <div style="padding:14px 16px"><div id="pg-coords" class="dim">—</div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="fb">GroundBench</span>
+    <nav class="fl"><a href="index.html" data-t="ft.home">Project</a><a href="explorer.html" data-t="ft.expl">Explorer</a><a href="uploads/GroundBench_Arxiv.pdf" target="_blank" data-t="ft.paper">Paper</a><a href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener" data-t="ft.code">GitHub</a><a href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener" data-t="ft.data">Dataset</a></nav>
+    <span class="fn" data-t="ft.note">1,500 × 5</span>
+  </div>
+</footer>
+
+<script src="results.js?v=gb2"></script>
+<script src="poly.js?v=gb2"></script>
+<script src="shapes.js?v=gb2"></script>
+<script src="i18n.js?v=gb2"></script>
+<script src="playground.js?v=gb2"></script>
+</body>
+</html>

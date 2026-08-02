@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Results explorer — GroundBench</title>
+<meta name="description" content="Every table from the GroundBench paper, sliceable: filled-region results, cue and reasoning ablations, selection/tracing diagnostics, and cohort slices." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=gb2" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html">
+      <svg class="brand-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true"><polygon points="12,2 21,8 18,19 6,19 3,8" stroke="#4DE3C1" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="2" r="1.9" fill="#4DE3C1"/><circle cx="21" cy="8" r="1.9" fill="#4DE3C1"/><circle cx="18" cy="19" r="1.9" fill="#4DE3C1"/><circle cx="6" cy="19" r="1.9" fill="#4DE3C1"/><circle cx="3" cy="8" r="1.9" fill="#4DE3C1"/></svg>
+      <span class="wm"><span>Ground</span><b>Bench</b></span>
+    </a>
+    <button class="nav-burger" id="burger" aria-label="Menu">≡</button>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="index.html#gap" data-t="nav.gap">Overview</a></li>
+      <li><a href="index.html#task" data-t="nav.task">Task</a></li>
+      <li><a href="index.html#cohort" data-t="nav.cohort">Cohort</a></li>
+      <li><a href="index.html#results" data-t="nav.results">Results</a></li>
+      <li><a href="index.html#cite" data-t="nav.cite">Cite</a></li>
+      <li><a class="np" href="playground.html" data-t="nav.try">Try it</a></li>
+      <li><a class="np on" href="explorer.html" data-t="nav.explorer">Explorer</a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="zh">中</button>
+    </div>
+    <div class="nav-icons">
+      <a href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener" aria-label="Code"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.16c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg></a>
+      <a href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener" aria-label="Dataset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6"/><path d="M4.5 11.5v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="blk" style="padding-top:118px">
+  <div class="wrap">
+    <div class="eyebrow"><span class="tick">▲</span> <span data-t="ex.eyebrow">Full results · every table, sliceable</span></div>
+    <div class="shead"><span class="snum">T1</span><h2 data-t="ex.t1.title">Filled-region results</h2></div>
+    <p class="sdek" data-th="ex.t1.dek">Table 1 in full. Every cell reads <strong>fixed / parseable-only</strong> under IoU² — the solid bar is the fixed score, the faint one behind it is the parseable-only score, and the gap between them is what parse failures cost. <em>IoUp</em> re-scores against the unreduced source part; <em>IoUn</em> divides IoUp by the construction fidelity C<sub>N</sub> and is a descriptive ratio, not a bounded probability.</p>
+
+    <div class="panel panel-pad" style="margin-bottom:clamp(18px,2.4vw,26px)">
+      <div class="lbl" style="margin-bottom:10px" data-t="ex.t1.chart">Fixed vs parseable-only, by budget</div>
+      <div class="chiprow" style="margin-bottom:16px"><div class="chipset" id="t1-metric"><span class="lbl" data-t="ui.metric">Metric</span></div></div>
+      <div class="gchart cols" id="t1-chart"></div>
+      <div class="legend">
+        <span><i style="border-color:#4DE3C1"></i><span data-t="ui.legend.fixed">Fixed denominator</span></span>
+        <span><i style="border-color:rgba(77,227,193,.3)"></i><span data-t="ui.legend.parse">Parseable-only</span></span>
+      </div>
+    </div>
+
+    <div class="chiprow"><div class="chipset" id="t1-budget"><span class="lbl" data-t="ui.budget">Budget</span></div></div>
+    <div class="tblwrap"><table class="gb" id="t1"><tbody></tbody></table></div>
+    <p class="note" style="margin-top:12px"><span class="sym">▸</span> <span data-th="ex.t1.note">Bold = best in the budget block, underline = second. C<sub>N</sub> = 88.6 / 96.2 / 98.3 / 99.0 / 99.4 for N = 8 / 16 / 24 / 32 / 64.</span></p>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="shead"><span class="snum">T1b</span><h2 data-t="ex.t1b.title">Where each configuration bends</h2></div>
+    <p class="sdek" data-t="ex.t1b.dek">The same numbers as curves. On the left, one metric across the budget curve; on the right, the threshold profile at one budget. Both switch.</p>
+    <div class="figrow even">
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:10px" data-t="s5.curve">Budget curve</div>
+        <div class="chiprow" style="margin-bottom:10px"><div class="chipset" id="ex-metric"><span class="lbl" data-t="ui.metric">Metric</span></div></div>
+        <div class="chartbody"><canvas id="ex-curve" style="width:100%;display:block;height:300px"></canvas></div>
+        <div class="legend" id="ex-legend"></div>
+      </div>
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:10px" data-t="ex.thresh">Pooled threshold profile</div>
+        <div class="chiprow" style="margin-bottom:10px"><div class="chipset" id="ex-tbudget"><span class="lbl" data-t="ui.budget">Budget</span></div></div>
+        <div class="chartbody"><canvas id="ex-thresh" style="width:100%;display:block;height:300px"></canvas></div>
+        <div class="legend" id="ex-legend2"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="shead"><span class="snum">F3 · F4 · T2 · T3</span><h2 data-t="s6.title">What moves the number</h2></div>
+    <p class="sdek" data-t="s6.dek">A frozen 13-condition grid on the Qwen endpoint — reasoning, visual evidence, resolution, colour, cue truth, decoding, repeatability — with matched 500-UID cohorts for the image interventions and Gemini replicating them.</p>
+
+    <div class="panel panel-pad" style="margin-bottom:clamp(18px,2.4vw,28px)">
+      <div class="lbl" style="margin-bottom:4px" data-t="s6.p1.k">F3 · Evidence ≫ resolution ≫ colour</div>
+      <p class="figcap" style="margin:8px 0 18px" data-t="s6.p1.b">Fixed IoU, mean over N = 8 / 16 / 24. Reasoning configuration is the largest input-preserving effect; removing the image is comparably damaging, while halving resolution or removing colour cost far less.</p>
+      <div class="bars" id="cue-bars"></div>
+    </div>
+
+    <div class="figrow" style="margin-bottom:clamp(18px,2.4vw,28px);align-items:start">
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:4px" data-t="s6.p3.k">F4 · Cues act asymmetrically</div>
+        <p class="figcap" style="margin:8px 0 18px" data-t="s6.p3.b">Wrong spatial hints hurt more than wrong colours and combine sub-additively; truthful hints give no reliable gain. This diagnoses susceptibility to conflicting language, not an intrinsic spatial/colour ranking.</p>
+        <div class="gchart" id="cue-grid"></div>
+      </div>
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:4px" data-t="s6.p4.k">Selection vs tracing</div>
+        <p class="figcap" style="margin:8px 0 18px" data-th="s6.p4.b">Sel is target preference — the prediction overlaps the intended referent more than any same-category distractor. Con is contour IoU conditional on that event. <b>Preference stays high while tracing is the persistent differentiator</b>, so one IoU should not be read as either ability alone.</p>
+        <div class="chiprow" style="margin-bottom:16px"><div class="chipset" id="sel-budget"><span class="lbl" data-t="ui.budget">Budget</span></div></div>
+        <div class="gchart" id="sel-chart"></div>
+      </div>
+    </div>
+
+    <p class="sdek" data-t="ex.t23.dek">The complete grid behind §06 — every condition at every budget, plus the parseable-only rows the summary charts leave out. 1,500 UIDs per budget, except matched 500-UID cohorts for the no-image, half-resolution, and greyscale conditions. Fixed IoU ×100.</p>
+    <div class="grid2">
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:14px" data-t="ex.t2.hd">Table 2 · prompt cues and image evidence</div>
+        <div class="tblwrap" style="border:0"><table class="gb" id="t2"><tbody></tbody></table></div>
+      </div>
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:14px" data-t="ex.t3.hd">Table 3 · thinking, decoding, repeatability</div>
+        <div class="tblwrap" style="border:0"><table class="gb" id="t3"><tbody></tbody></table></div>
+      </div>
+    </div>
+    <div class="callout warn" style="margin-top:22px" data-th="ex.t23.callout">Wrong spatial hints cost <span class="big">24.1</span> points against the baseline prompt; wrong colour hints cost <span class="big">9.2</span>. Truthful hints of either kind give no reliable gain — the asymmetry diagnoses susceptibility to conflicting language, not an intrinsic spatial-over-colour ranking.</div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="shead"><span class="snum">T4 · T5</span><h2 data-t="ex.diag.title">Diagnostic slices</h2></div>
+    <div class="chiprow"><div class="chipset" id="diag-tab"><span class="lbl" data-t="ui.view">View</span></div></div>
+
+    <div data-pane="sel">
+      <p class="sdek" data-th="ex.t4.dek">Best-effort view. <em>Sel</em> records a preference event only when target overlap exceeds every same-category distractor overlap — no absolute threshold, no confidence ranking, no cross-category matching. <em>Con</em> is contour IoU conditional on that event.</p>
+      <div class="tblwrap"><table class="gb" id="t4"><tbody></tbody></table></div>
+      <div class="callout" style="margin-top:22px" data-th="ex.t4.callout">Target preference holds up to N = 32 and then breaks: mean Sel falls from <span class="big">80.8</span> to <span class="big">53.7</span> at N = 64 while mean Con moves only 2.0 points. Qwen with thinking off collapses to <span class="big">3.8</span> — it stops producing parseable answers at all.</div>
+    </div>
+
+    <div data-pane="slice" hidden>
+      <p class="sdek" data-t="ex.t5.dek">Pooled fixed-IoU by composite difficulty, its components, and semantic group. Difficulty, D, Q, and RS use IoU²; semantic groups use best-effort.</p>
+      <div class="tblwrap"><table class="gb" id="t5"><tbody></tbody></table></div>
+      <div class="grid3" style="margin-top:26px">
+        <div class="fcard"><span class="n" data-t="ex.t5.c1.k">DIFFICULTY</span><h4 data-t="ex.t5.c1.h">Consistent easy → hard decline</h4><p data-t="ex.t5.c1.b">Every configuration loses 13–16 points from easy to hard, and matched parseable-only losses implicate conditional geometry rather than format coverage.</p></div>
+        <div class="fcard"><span class="n" data-t="ex.t5.c2.k">COMPLEXITY Q</span><h4 data-t="ex.t5.c2.h">Contour complexity dominates</h4><p data-t="ex.t5.c2.b">Q = ℓ²/(4πA). The Q1→Q3 drop (−10.2 mean) is the steepest single-axis effect in the table — more than distractor count.</p></div>
+        <div class="fcard"><span class="n" data-t="ex.t5.c3.k">SCALE RS</span><h4 data-t="ex.t5.c3.h">Small targets are the hard case</h4><p data-th="ex.t5.c3.b">RS is target-box area over image area. Unlike every other axis, scores <em>rise</em> from RS1 to RS3: small referents cost 8.6 mean points.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="blk">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§</span><h2 data-t="ex.read.title">Reading these numbers</h2></div>
+    <div class="grid3">
+      <div class="fcard"><span class="n" data-t="ex.read.c1.k">FIXED DENOMINATOR</span><h4 data-t="ex.read.c1.h">Every planned question counts</h4><p data-t="ex.read.c1.b">An unparseable response scores zero and stays in the denominator. Conditioning on successful output can make a low-coverage configuration look geometrically strong — which is exactly what happens to Gemini at N = 64 (37.7 fixed, 63.4 parseable).</p></div>
+      <div class="fcard"><span class="n" data-t="ex.read.c2.k">RECOVERY HISTORY</span><h4 data-t="ex.read.c2.h">IoU⁰ / IoU¹ / IoU²</h4><p data-t="ex.read.c2.b">IoU⁰ is the single-call view, IoU¹ adds one parse-failure-triggered stateless retry, IoU² up to two. All headline scores use the uniform IoU² view. Best-effort is reserved for labelled diagnostics.</p></div>
+      <div class="fcard"><span class="n" data-t="ex.read.c3.k">SCOPE</span><h4 data-t="ex.read.c3.h">A snapshot, not a ranking of architectures</h4><p data-t="ex.read.c3.b">A purposive hosted-system snapshot collected 10–17 July 2026 — not a probability sample. Every result is attributed to the complete labelled configuration, endpoint and reasoning setting included.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="fb">GroundBench</span>
+    <nav class="fl"><a href="index.html" data-t="ft.home">Project</a><a href="playground.html" data-t="ft.try">Playground</a><a href="uploads/GroundBench_Arxiv.pdf" target="_blank" data-t="ft.paper">Paper</a><a href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener" data-t="ft.code">GitHub</a><a href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener" data-t="ft.data">Dataset</a></nav>
+    <span class="fn" data-t="ft.note">1,500 × 5</span>
+  </div>
+</footer>
+
+<script src="results.js?v=gb2"></script>
+<script src="poly.js?v=gb2"></script>
+<script src="i18n.js?v=gb2"></script>
+<script src="explorer.js?v=gb2"></script>
+</body>
+</html>

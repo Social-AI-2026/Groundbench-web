@@ -10,3 +10,13 @@ Thumbs.db
 .vscode/
 .idea/
 *.bak_*
+
+# 设计工具草稿：粘贴的截图、源视频与 PDF，站点不引用，绝不入库
+uploads/*
+!uploads/GroundBench_Arxiv.pdf
+scraps/
+_changed/
+.thumbnail/
+figures/
+videos/
+screenshots/

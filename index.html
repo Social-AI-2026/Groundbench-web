@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GroundBench — Multi-Resolution Polygon Grounding</title>
+<meta name="description" content="A matched benchmark that re-targets 1,500 RefCOCO-family grounding triples to exact-N polygons at five vertex budgets, exposing the geometry gap in vision–language models." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=gb2" />
+</head>
+<body>
+
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top">
+      <svg class="brand-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true"><polygon points="12,2 21,8 18,19 6,19 3,8" stroke="#4DE3C1" stroke-width="1.4" stroke-linejoin="round"/><circle cx="12" cy="2" r="1.9" fill="#4DE3C1"/><circle cx="21" cy="8" r="1.9" fill="#4DE3C1"/><circle cx="18" cy="19" r="1.9" fill="#4DE3C1"/><circle cx="6" cy="19" r="1.9" fill="#4DE3C1"/><circle cx="3" cy="8" r="1.9" fill="#4DE3C1"/></svg>
+      <span class="wm"><span>Ground</span><b>Bench</b></span>
+    </a>
+    <button class="nav-burger" id="burger" aria-label="Menu">≡</button>
+    <ul class="nav-links" id="navlinks">
+      <li><a href="#gap" data-spy="gap" data-t="nav.gap">Overview</a></li>
+      <li><a href="#task" data-spy="task" data-t="nav.task">Task</a></li>
+      <li><a href="#targets" data-spy="targets" data-t="nav.targets">Targets</a></li>
+      <li><a href="#cohort" data-spy="cohort" data-t="nav.cohort">Cohort</a></li>
+      <li><a href="#results" data-spy="results" data-t="nav.results">Results</a></li>
+      <li><a href="#cite" data-spy="cite" data-t="nav.cite">Cite</a></li>
+      <li><a class="np" href="playground.html" data-t="nav.try">Try it</a></li>
+      <li><a class="np" href="explorer.html" data-t="nav.explorer">Explorer</a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="zh">中</button>
+    </div>
+    <div class="nav-icons">
+      <a href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener" aria-label="Code"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.16c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg></a>
+      <a href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener" aria-label="Dataset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5.5" rx="7.5" ry="3"/><path d="M4.5 5.5v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6"/><path d="M4.5 11.5v6c0 1.66 3.36 3 7.5 3s7.5-1.34 7.5-3v-6"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================================ HERO ================================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="tick">▲</span> <span data-t="hero.eyebrow">Benchmark · 2026 · 1,500 × 5 budgets</span></div>
+      <h1><span class="l1">Ground</span><span class="l2">Bench<em>.</em></span></h1>
+      <p class="hero-sub" data-t="hero.sub">Multi-resolution polygon grounding exposes the geometry gap in vision–language models.</p>
+      <p class="hero-lede" data-th="hero.lede">Bounding-box scores on RefCOCO-family grounding leave little room to separate frontier systems — and boxes discard shape. We re-target the same <strong>1,500 image–expression–referent triples</strong> to exact-<em>N</em> polygons at five vertex budgets, then audit filled-region IoU and legal-polygon completion under one fixed denominator.</p>
+      <p class="authors"><b>Zhonghan Bian</b> · <b>Zhenran Wang</b> · <b>Jinsong Li</b> · <b>Zhangyang Qi</b><br />zhenran.w.1103@gmail.com</p>
+      <div class="btnrow">
+        <a class="btn hi" href="uploads/GroundBench_Arxiv.pdf" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3h11l5 5v13H4z"/><path d="M15 3v5h5"/></svg> <span data-t="btn.paper">Paper</span></a>
+        <a class="btn" href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6 2 12l6 6M16 6l6 6-6 6"/></svg> <span data-t="btn.code">Code</span></a>
+        <a class="btn" href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg> <span data-t="btn.data">Dataset</span></a>
+        <a class="btn" href="playground.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,3 20,9 17,19 7,19 4,9"/></svg> <span data-t="btn.trace">Trace it yourself</span></a>
+      </div>
+    </div>
+    <div>
+      <div class="stage">
+        <canvas id="hero-canvas" height="460"></canvas>
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <div class="stage-tag" id="hero-tag">uid 0417 · “the zebra behind the fence”</div>
+        <div class="stage-hud"><span id="hero-n">N = 8</span><span id="hero-iou">IoU —</span></div>
+      </div>
+      <div class="legend">
+        <span><i style="border-color:#FFC24B"></i><span data-t="lg.box">Predicted box</span></span>
+        <span><i style="border-color:#4DE3C1"></i><span data-th="lg.target">Canonical target G<sub>N</sub></span></span>
+        <span><i style="border-color:#FF6B57"></i><span data-t="lg.pred">Model polygon</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="statbar">
+  <div class="statbar-in">
+    <div class="stat hi"><div class="v">88.2</div><div class="k" data-t="stat.1">Box IoU · strongest config</div></div>
+    <div class="stat lo"><div class="v">57.7</div><div class="k" data-t="stat.2">Direct polygon IoU · same system</div></div>
+    <div class="stat"><div class="v">1,500<small> ×5</small></div><div class="k" data-t="stat.3">Matched questions × budgets</div></div>
+    <div class="stat"><div class="v">7.5<small> / 100</small></div><div class="k" data-t="stat.4">Legal-polygon coverage at N = 64</div></div>
+  </div>
+</div>
+
+<!-- ================================ GAP ================================== -->
+<section class="blk" id="gap">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§01</span><h2 data-t="s1.title">Boxes localise. Polygons discriminate.</h2></div>
+    <p class="sdek" data-th="s1.dek">A four-number rectangle carries no shape, follows no boundary, and credits background interior. Dense masks restore shape but need a specialist decoder. <strong>Exact-<em>N</em> polygons sit in between</strong> — expressive enough to expose contour, compact enough to be emitted as text through the same chat interface used for everything else.</p>
+
+    <div class="figrow">
+      <div>
+        <div class="stage">
+          <canvas id="gap-canvas" height="400"></canvas>
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="stage-tag" id="gap-tag">uid 0417 · “the zebra behind the fence”</div>
+          <div class="stage-hud"><span id="gap-box" style="color:var(--box)">Box vs region</span><span id="gap-poly" style="color:var(--ref)">Exact-N vs region</span></div>
+        </div>
+        <div class="chiprow" style="margin-top:16px;margin-bottom:0">
+          <div class="chipset" id="gap-shape"><span class="lbl" data-t="ui.referent">Referent</span></div>
+        </div>
+        <div class="chiprow" style="margin-top:12px;margin-bottom:0">
+          <div class="chipset"><span class="lbl" data-t="ui.budget">Budget</span><span id="gap-nval" class="lbl" style="color:var(--ref)">N = 16</span></div>
+        </div>
+        <input class="slider" id="gap-slider" type="range" min="0" max="4" step="1" value="1" aria-label="Vertex budget" />
+        <div class="legend">
+          <span><i style="border-color:#FFC24B"></i><span data-t="lg.box">Predicted box</span></span>
+          <span><i style="border-color:#4DE3C1"></i><span data-t="lg.target2">Canonical target</span></span>
+          <span><i style="border-color:rgba(255,194,75,.5)"></i><span data-t="lg.hatch">Background credited by the box</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="grid2" style="gap:14px">
+          <div class="fcard"><span class="n" data-t="s1.c1.k">OLD CONTRACT</span><h4 data-t="s1.c1.h">Four coordinates, one box</h4><p data-t="s1.c1.b">Limited discrimination · coarse region geometry · fixed output budget · low shape fidelity.</p></div>
+          <div class="fcard" style="border-color:rgba(77,227,193,.32)"><span class="n" data-t="s1.c2.k">NEW CONTRACT</span><h4 data-t="s1.c2.h">2N coordinates, one contour</h4><p data-t="s1.c2.b">Enhanced discrimination · boundary-aware geometry · controlled vertex budget · fine-grained shape fidelity.</p></div>
+        </div>
+        <div class="callout warn" style="margin-top:18px" data-th="s1.callout">The strongest tested configuration reaches <span class="big">88.2</span> box IoU and <span class="big">97.1</span> Acc@.5 — but only <span class="big">57.7</span> and <span class="big">69.2</span> when asked for polygons directly.</div>
+        <p class="figcap" style="margin-top:14px" data-th="s1.cap"><b>Matched control.</b> Because headline box IoU is scored against the ground-truth box and contour IoU against G<sub>N</sub>, the two are not directly comparable. Rasterising each <em>predicted</em> box into an exact-<em>N</em> polygon against the same contour target gives 57.7 (direct) vs 57.3 (box-derived) when pooled — the gap is an output-contract gap, not a scoring artefact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================ TASK ================================= -->
+<section class="blk" id="task">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§02</span><h2 data-t="s2.title">The task</h2></div>
+    <p class="sdek" data-th="s2.dek">Given an image <em>I</em>, a referring expression <em>r</em>, and an announced budget <em>N</em>, the model returns exactly <em>N</em> normalised points. One line, 2<em>N</em> integers in {0…999}. No tools, no mask head, no task-specific training.</p>
+
+    <div class="figrow" style="align-items:start">
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:16px" data-t="s2.io.title">What goes in, what must come back</div>
+        <div class="grid2" style="gap:14px">
+          <div class="fcard"><span class="n" data-t="s2.in.k">INPUT</span><h4 data-t="s2.in.h">A picture, a phrase, a number</h4><p data-t="s2.in.b">One image, one referring expression such as “the zebra behind the fence”, and the announced vertex budget N.</p></div>
+          <div class="fcard"><span class="n" data-t="s2.out.k">OUTPUT</span><h4 data-t="s2.out.h">One line of 2N numbers</h4><p data-t="s2.out.b">Exactly N points walked around the object’s edge, each coordinate an integer from 0 to 999. Nothing else — no tools, no mask head, no drawing canvas.</p></div>
+        </div>
+        <div style="margin-top:14px;padding:14px 16px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r)">
+          <div class="lbl" style="margin-bottom:10px" data-t="s2.sample">A valid answer at N = 16 — vertices in boundary order</div>
+          <div class="ptgrid"><span><i>01</i>412, 233</span><span><i>02</i>468, 219</span><span><i>03</i>531, 240</span><span><i>04</i>588, 271</span><span><i>05</i>620, 318</span><span><i>06</i>631, 372</span><span><i>07</i>618, 425</span><span><i>08</i>579, 462</span><span><i>09</i>522, 481</span><span><i>10</i>461, 486</span><span><i>11</i>402, 474</span><span><i>12</i>356, 447</span><span><i>13</i>327, 408</span><span><i>14</i>316, 361</span><span><i>15</i>331, 310</span><span><i>16</i>366, 265</span></div>
+          <div class="lbl" style="margin:15px 0 7px" data-t="s2.sample.raw">submitted literally as one flat line</div>
+          <div class="rawline">412 233 468 219 531 240 588 271 620 318 631 372 618 425 579 462 522 481 461 486 402 474 356 447 327 408 316 361 331 310 366 265</div>
+        </div>
+        <p class="figcap" style="margin-top:14px" data-th="s2.score">We join those points into a closed outline, fill it in, and measure how much of it overlaps the reference outline. An answer that cannot be read as exactly 2<em>N</em> numbers scores zero — it is not skipped.</p>
+      </div>
+      <div>
+        <div class="grid2" style="gap:14px">
+          <div class="fcard"><span class="n" data-t="s2.a1.k">AXIS 01</span><h4 data-t="s2.a1.h">Filled-region utility</h4><p data-th="s2.a1.b">Does the emitted sequence still cover a useful region? Finite coordinates are mapped to pixels and their clipped cyclic fill is rasterised; IoU against the canonical target G<sub>N</sub>.</p></div>
+          <div class="fcard"><span class="n" data-t="s2.a2.k">AXIS 02</span><h4 data-t="s2.a2.h">Legal-polygon completion</h4><p data-t="s2.a2.b">Distinct in-range integer vertices forming a simple, positive-area polygon. Duplicates, zero area, and self-intersection score zero — with the same fixed denominator.</p></div>
+        </div>
+        <div class="panel panel-pad" style="margin-top:14px">
+          <div class="lbl" style="margin-bottom:12px" data-t="s2.three">Three abilities, coupled</div>
+          <div class="kvs">
+            <div class="kv"><span class="k" data-t="s2.k1">Resolve the referent among same-category distractors</span><span class="v" style="color:var(--ref)">Sel</span></div>
+            <div class="kv"><span class="k" data-t="s2.k2">Infer the visible boundary and allocate points along it</span><span class="v" style="color:var(--ref)">Con</span></div>
+            <div class="kv"><span class="k" data-t="s2.k3">Serialise a closed ordered sequence of exactly N vertices</span><span class="v" style="color:var(--ref)">Legality</span></div>
+          </div>
+          <p class="figcap" style="margin-top:14px" data-th="s2.cap">Start point and traversal direction are unrestricted — filled-mask IoU is invariant to cyclic shift and reversal. Output allowances are non-binding: the longest legal answer is about <b>520 characters</b> against a tightest allowance of <b>1,280 tokens</b>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== TARGETS =============================== -->
+<section class="blk" id="targets">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§03</span><h2 data-t="s3.title">Canonical targets</h2></div>
+    <p class="sdek" data-th="s3.dek">Five deterministic targets per referent, <em>N</em> ∈ {8, 16, 24, 32, 64}, derived from one selected annotation contour and frozen before evaluation. Image, phrase, and referent stay constant — <strong>only the answer surface changes</strong>. All five files share the same 1,500 UIDs, so every cross-budget claim is paired on exact question intersections.</p>
+
+    <div class="figrow even">
+      <div>
+        <div class="stage">
+          <canvas id="algo-canvas" height="360"></canvas>
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          <div class="stage-tag" id="algo-tag">Source contour</div>
+          <div class="stage-hud"><span id="algo-op">—</span><span id="algo-count">|C| = 41</span></div>
+        </div>
+        <div class="chiprow" style="margin-top:16px;margin-bottom:0">
+          <div class="chipset" id="algo-shape"><span class="lbl" data-t="ui.referent">Referent</span></div>
+        </div>
+        <div class="chiprow" style="margin-top:12px;margin-bottom:0">
+          <div class="chipset" id="algo-chips"><span class="lbl" data-t="ui.target">Target</span></div>
+        </div>
+      </div>
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:14px" data-t="s3.rules">Two rules, repeated until the contour has exactly N vertices</div>
+        <div class="grid2" style="gap:14px">
+          <div class="fcard"><span class="n" style="color:var(--box)" data-t="s3.r1.k">TOO FEW POINTS</span><h4 data-t="s3.r1.h">Split the longest edge</h4><p data-t="s3.r1.b">Find the longest straight run along the outline and drop a new point at its midpoint. Repeat. Detail is added where the outline is currently coarsest.</p></div>
+          <div class="fcard"><span class="n" style="color:var(--pred)" data-t="s3.r2.k">TOO MANY POINTS</span><h4 data-t="s3.r2.h">Drop the flattest corner</h4><p data-t="s3.r2.b">Find the vertex whose neighbours form the smallest triangle — the corner that bends the least — and remove it. Repeat. The shape loses its least informative point first.</p></div>
+        </div>
+        <p class="figcap" style="margin-top:14px" data-t="s3.rules.cap">Both rules are deterministic and ties take the lowest index, so the same annotation always yields the same five targets. Watch it run on the left.</p>
+      </div>
+    </div>
+
+    <div class="panel panel-pad" style="margin-top:clamp(16px,2.2vw,24px)">
+      <div class="lbl" style="margin-bottom:14px" data-th="s3.fid">Construction fidelity C<sub>N</sub> — how much shape survives</div>
+      <div class="bars" id="fidelity-bars"></div>
+      <p class="figcap" style="margin-top:14px" data-th="s3.fid.cap">Mean IoU between the exact-<em>N</em> target and the unreduced source part. Higher means less approximation loss — which is why the <b>collapse at N = 64</b> cannot be blamed on a worse reference.</p>
+    </div>
+
+    <div class="grid3" style="margin-top:clamp(18px,2.4vw,28px)">
+      <div class="fcard"><span class="n" data-t="s3.c1.k">MULTI-PART</span><h4 data-t="s3.c1.h">One part, deterministically</h4><p data-th="s3.c1.b">When an annotation has several polygon parts, construction takes the part with the most listed vertices. This affects <b>148 / 1,500</b> UIDs; within them the selected part covers 71.76% of the all-parts union on average and is the largest-area part 85.14% of the time.</p></div>
+      <div class="fcard"><span class="n" data-t="s3.c2.k">PHASE AUDIT</span><h4 data-t="s3.c2.h">Eight starting offsets</h4><p data-t="s3.c2.b">Targets are reconstructed after shifting the sampling origin through eight offsets spaced at 12.5% of the contour. Configuration ordering and the high-budget reversal both survive.</p></div>
+      <div class="fcard"><span class="n" data-t="s3.c3.k">RE-SCORING</span><h4 data-t="s3.c3.h">Alternate masks, alternate backend</h4><p data-th="s3.c3.b">The same predictions are re-scored against the unreduced part, the all-parts union, and a continuous-area integrator. Five-budget means shift by at most <b>1.1 points</b> without changing the ordering.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== COHORT ================================ -->
+<section class="blk" id="cohort">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§04</span><h2 data-t="s4.title">The cohort is not an average</h2></div>
+    <p class="sdek" data-t="s4.dek">1,500 unique image–referent pairs, one per image, 500 each from RefCOCO, RefCOCO+, and RefCOCOg. Every question ships with frozen metadata — distractor count, contour complexity, relative scale, semantic group, phrase length, and a reproducible composite difficulty label — so results can be sliced instead of summarised.</p>
+
+    <div class="lbl" style="margin-bottom:12px" data-t="s4.comp">Composition</div>
+    <div class="cardstrip" style="margin-bottom:22px">
+      <div class="scard"><span class="k">RefCOCO / RefCOCO+ / RefCOCOg</span><span class="v">500 · 500 · 500</span></div>
+      <div class="scard"><span class="k" data-t="s4.kv2">Distractor bins D1 / D2 / D3+</span><span class="v">705 · 276 · 519</span></div>
+      <div class="scard"><span class="k" data-t="s4.kv3">Difficulty easy / medium / hard</span><span class="v">436 · 554 · 510</span></div>
+      <div class="scard"><span class="k" data-t="s4.kv6">Generations collected</span><span class="v">10–17 Jul 2026</span></div>
+      <div class="scard"><span class="k" data-t="s4.kv7">Longest image side</span><span class="v">1,024 px</span></div>
+    </div>
+    <div>
+      <div class="chiprow"><div class="chipset" id="slice-axis"><span class="lbl" data-t="ui.sliceby">Slice by</span></div></div>
+      <div class="panel panel-pad">
+        <div class="gchart cols" id="slice-chart"></div>
+      </div>
+      <p class="figcap" data-th="s4.cap">Pooled fixed-IoU (Table 5). Difficulty, D, Q, and RS use IoU²; semantic groups use the best-effort view. Every configuration declines monotonically from easy to hard and from low to high contour complexity — and improves with target scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================== RESULTS =============================== -->
+<section class="blk" id="results">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§05</span><h2 data-t="s5.title">Results</h2></div>
+    <p class="sdek" data-th="s5.dek">Four hosted configurations answer all 1,500 questions at all five budgets, with Qwen thinking-off as a same-endpoint ablation. Headline <em>IoU²</em> locks the first parseable output over one primary call plus two stateless retries. Every cell is <strong>fixed-denominator</strong> — an unparseable response scores zero — paired with its parseable-only counterpart.</p>
+
+    <div class="chiprow">
+      <div class="chipset" id="res-budget"><span class="lbl" data-t="ui.budget">Budget</span></div>
+    </div>
+
+    <div class="tblwrap"><table class="gb" id="res-table"><tbody></tbody></table></div>
+    <p class="note" style="margin-top:14px"><span class="sym">▸</span> <span data-th="s5.note">Each cell reads <b>fixed / parseable-only</b>: the solid bar is the fixed score, the faint one behind it is parseable-only, and the gap is what parse failures cost. Bold marks best, underline second, within the selected budget. <a href="explorer.html">Open the full explorer →</a></span></p>
+
+    <div class="figrow" style="margin-top:clamp(30px,4vw,48px);align-items:start">
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:4px" data-t="s5.curve">Budget curve</div>
+        <div class="chiprow" style="margin:12px 0 4px"><div class="chipset" id="curve-metric"><span class="lbl" data-t="ui.metric">Metric</span></div></div>
+        <canvas id="curve-canvas" height="300" style="width:100%;display:block"></canvas>
+        <div class="legend" id="curve-legend"></div>
+      </div>
+      <div>
+        <div class="fcard" style="border-left:2px solid var(--ref)"><span class="n" data-t="s5.f1.k">F1 · GEOMETRY GAP</span><h4 data-t="s5.f1.h">A large, unresolved gap</h4><p data-th="s5.f1.b">Gemini leads, then Qwen-max, Doubao, Kimi. Thresholds separate Kimi’s low-budget object finding from Gemini’s stronger conditional geometry — both lose high-<em>N</em> reliability.</p></div>
+        <div class="fcard" style="border-left:2px solid var(--pred);margin-top:14px"><span class="n" data-t="s5.f2.k">F2 · NON-MONOTONE IN N</span><h4 data-t="s5.f2.h">Collapse at the densest budget</h4><p data-th="s5.f2.b">Scores peak at moderate budgets and fall at N = 64 <em>despite</em> increasing reference fidelity, and the decline persists when extra vertices only subdivide edges without changing the filled target. At N = 64 Gemini’s filled IoU stays 37.7 while legal-polygon coverage and IoU fall to <b>7.5 / 4.2</b>.</p></div>
+        <div class="fcard" style="margin-top:14px"><span class="n" data-t="s5.f3.k">RANK STABILITY</span><h4 data-t="s5.f3.h">One threshold underdetermines quality</h4><p data-t="s5.f3.b">Acc@.5 preserves a single ordering across all four configurations and all five budgets; fixed IoU has one Qwen–Gemini inversion at N = 64. Lower thresholds induce further cross-budget changes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ GET IT & CITE ============================= -->
+<section class="blk" id="cite">
+  <div class="wrap">
+    <div class="shead"><span class="snum">§06</span><h2 data-t="s7.title">Get it &amp; cite it</h2></div>
+    <p class="sdek" data-t="s7.dek">Five JSONL files share the same 1,500 UIDs. The harness, the frozen per-question metadata, the alternate reference masks, and the official scoring code all live in the repository — that is where to look to reproduce or extend anything on this page.</p>
+
+    <div class="btnrow" style="margin-bottom:clamp(24px,3vw,36px)">
+      <a class="btn hi" href="uploads/GroundBench_Arxiv.pdf" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3h11l5 5v13H4z"/><path d="M15 3v5h5"/></svg> <span data-t="btn.paper">Paper</span></a>
+      <a class="btn" href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2.16c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18.92-.26 1.91-.39 2.89-.39.98 0 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.05.78 2.12v3.14c0 .31.21.67.8.56C20.21 21.38 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg> <span data-t="btn.code">GitHub</span></a>
+      <a class="btn" href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/></svg> <span data-t="btn.data">Dataset</span></a>
+    </div>
+
+    <div class="callout" style="margin-bottom:clamp(18px,2.4vw,26px)" data-th="s7.callout">GroundBench is a controlled <strong>output audit</strong> of time-stamped hosted configurations, not an architecture-level comparison. Coordinate emission is a stress test, not a prescribed interface — mask heads, tool calls, and compressed contours are all valid alternatives.</div>
+
+    <div class="code">
+      <div class="code-hd"><span>bibtex</span><button class="copy" data-copy="#bib" data-t="ui.copy">Copy</button></div>
+<pre id="bib"><span class="kw">@misc</span>{groundbench2026,
+  title  = {GroundBench: Multi-Resolution Polygon Grounding Exposes
+            the Geometry Gap in Vision-Language Models},
+  author = {Bian, Zhonghan and Wang, Zhenran and Li, Jinsong and Qi, Zhangyang},
+  year   = {2026},
+  url    = {https://github.com/Social-AI-2026/Groundbench-codebase},
+  note   = {Preprint. Correspondence: zhenran.w.1103@gmail.com}
+}</pre>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="fb">GroundBench</span>
+    <nav class="fl"><a href="playground.html" data-t="ft.try">Playground</a><a href="explorer.html" data-t="ft.expl">Explorer</a><a href="uploads/GroundBench_Arxiv.pdf" target="_blank" data-t="ft.paper">Paper</a><a href="https://github.com/Social-AI-2026/Groundbench-codebase" target="_blank" rel="noopener" data-t="ft.code">GitHub</a><a href="https://huggingface.co/datasets/Social-AI-2026/GroundBench" target="_blank" rel="noopener" data-t="ft.data">Dataset</a></nav>
+    <span class="fn" data-t="ft.note">1,500 × 5</span>
+  </div>
+</footer>
+
+<script src="results.js?v=gb2"></script>
+<script src="poly.js?v=gb2"></script>
+<script src="shapes.js?v=gb2"></script>
+<script src="i18n.js?v=gb2"></script>
+<script src="app.js?v=gb2"></script>
+</body>
+</html>
