@@ -116,7 +116,7 @@ body.zh .fcard p,body.zh .callout{font-size:14.5px}
 section.blk{padding:clamp(64px,8vw,112px) 0;position:relative}
 section.blk+section.blk{border-top:1px solid var(--line)}
 .shead{display:flex;align-items:baseline;gap:16px;margin-bottom:12px;flex-wrap:wrap}
-.shead .snum{flex:none}
+.shead .snum{flex:none;font-size:clamp(26px,3.6vw,42px);letter-spacing:-.01em}
 .shead h2{flex:1 1 340px;min-width:0}
 .snum{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--ref)}
 .shead h2{font-size:clamp(26px,3.6vw,42px);letter-spacing:-.03em}
