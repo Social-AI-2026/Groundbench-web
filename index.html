@@ -129,33 +129,25 @@
     <div class="shead"><span class="snum">§02</span><h2 data-t="s2.title">The task</h2></div>
     <p class="sdek" data-th="s2.dek">Given an image <em>I</em>, a referring expression <em>r</em>, and an announced budget <em>N</em>, the model returns exactly <em>N</em> normalised points. One line, 2<em>N</em> integers in {0…999}. No tools, no mask head, no task-specific training.</p>
 
-    <div class="figrow" style="align-items:start">
-      <div>
-        <div class="grid2" style="gap:14px">
-          <div class="fcard"><span class="n" data-t="s2.in.k">INPUT</span><h4 data-t="s2.in.h">A picture, a phrase, a number</h4><p data-t="s2.in.b">One image, one referring expression such as “the zebra behind the fence”, and the announced vertex budget N.</p></div>
-          <div class="fcard"><span class="n" data-t="s2.out.k">OUTPUT</span><h4 data-t="s2.out.h">One line of 2N numbers</h4><p data-t="s2.out.b">Exactly N points walked around the object’s edge, each coordinate an integer from 0 to 999. Nothing else — no tools, no mask head, no drawing canvas.</p></div>
-        </div>
-        <div style="margin-top:14px;padding:14px 16px;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r)">
-          <div class="lbl" style="margin-bottom:10px" data-t="s2.sample">A valid answer at N = 16 — vertices in boundary order</div>
-          <div class="ptgrid"><span><i>01</i>412, 233</span><span><i>02</i>468, 219</span><span><i>03</i>531, 240</span><span><i>04</i>588, 271</span><span><i>05</i>620, 318</span><span><i>06</i>631, 372</span><span><i>07</i>618, 425</span><span><i>08</i>579, 462</span><span><i>09</i>522, 481</span><span><i>10</i>461, 486</span><span><i>11</i>402, 474</span><span><i>12</i>356, 447</span><span><i>13</i>327, 408</span><span><i>14</i>316, 361</span><span><i>15</i>331, 310</span><span><i>16</i>366, 265</span></div>
-          <div class="lbl" style="margin:15px 0 7px" data-t="s2.sample.raw">submitted literally as one flat line</div>
-          <div class="rawline">412 233 468 219 531 240 588 271 620 318 631 372 618 425 579 462 522 481 461 486 402 474 356 447 327 408 316 361 331 310 366 265</div>
-        </div>
+    <div class="s2row">
+      <div class="fcard"><span class="n" data-t="s2.in.k">INPUT</span><h4 data-t="s2.in.h">A picture, a phrase, a number</h4><p data-t="s2.in.b">One image, one referring expression such as “the zebra behind the fence”, and the announced vertex budget N.</p></div>
+      <div class="fcard"><span class="n" data-t="s2.out.k">OUTPUT</span><h4 data-t="s2.out.h">One line of 2N numbers</h4><p data-t="s2.out.b">Exactly N points walked around the object’s edge, each coordinate an integer from 0 to 999. Nothing else — no tools, no mask head, no drawing canvas.</p></div>
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:10px" data-t="s2.sample">A valid answer at N = 16 — vertices in boundary order</div>
+        <div class="ptgrid"><span><i>01</i>412, 233</span><span><i>02</i>468, 219</span><span><i>03</i>531, 240</span><span><i>04</i>588, 271</span><span><i>05</i>620, 318</span><span><i>06</i>631, 372</span><span><i>07</i>618, 425</span><span><i>08</i>579, 462</span><span><i>09</i>522, 481</span><span><i>10</i>461, 486</span><span><i>11</i>402, 474</span><span><i>12</i>356, 447</span><span><i>13</i>327, 408</span><span><i>14</i>316, 361</span><span><i>15</i>331, 310</span><span><i>16</i>366, 265</span></div>
+        <div class="lbl" style="margin:15px 0 7px" data-t="s2.sample.raw">submitted literally as one flat line</div>
+        <div class="rawline">412 233 468 219 531 240 588 271 620 318 631 372 618 425 579 462 522 481 461 486 402 474 356 447 327 408 316 361 331 310 366 265</div>
       </div>
-      <div>
-        <div class="grid2" style="gap:14px">
-          <div class="fcard"><span class="n" data-t="s2.a1.k">AXIS 01</span><h4 data-t="s2.a1.h">Filled-region utility</h4><p data-th="s2.a1.b">Does the emitted sequence still cover a useful region? Finite coordinates are mapped to pixels and their clipped cyclic fill is rasterised; IoU against the canonical target G<sub>N</sub>.</p></div>
-          <div class="fcard"><span class="n" data-t="s2.a2.k">AXIS 02</span><h4 data-t="s2.a2.h">Legal-polygon completion</h4><p data-t="s2.a2.b">Distinct in-range integer vertices forming a simple, positive-area polygon. Duplicates, zero area, and self-intersection score zero — with the same fixed denominator.</p></div>
+      <div class="fcard"><span class="n" data-t="s2.a1.k">AXIS 01</span><h4 data-t="s2.a1.h">Filled-region utility</h4><p data-th="s2.a1.b">Does the emitted sequence still cover a useful region? Finite coordinates are mapped to pixels and their clipped cyclic fill is rasterised; IoU against the canonical target G<sub>N</sub>.</p></div>
+      <div class="fcard"><span class="n" data-t="s2.a2.k">AXIS 02</span><h4 data-t="s2.a2.h">Legal-polygon completion</h4><p data-t="s2.a2.b">Distinct in-range integer vertices forming a simple, positive-area polygon. Duplicates, zero area, and self-intersection score zero — with the same fixed denominator.</p></div>
+      <div class="panel panel-pad">
+        <div class="lbl" style="margin-bottom:12px" data-t="s2.three">Three abilities, coupled</div>
+        <div class="kvs">
+          <div class="kv"><span class="k" data-t="s2.k1">Resolve the referent among same-category distractors</span><span class="v" style="color:var(--ref)">Sel</span></div>
+          <div class="kv"><span class="k" data-t="s2.k2">Infer the visible boundary and allocate points along it</span><span class="v" style="color:var(--ref)">Con</span></div>
+          <div class="kv"><span class="k" data-t="s2.k3">Serialise a closed ordered sequence of exactly N vertices</span><span class="v" style="color:var(--ref)">Legality</span></div>
         </div>
-        <div class="panel panel-pad" style="margin-top:14px">
-          <div class="lbl" style="margin-bottom:12px" data-t="s2.three">Three abilities, coupled</div>
-          <div class="kvs">
-            <div class="kv"><span class="k" data-t="s2.k1">Resolve the referent among same-category distractors</span><span class="v" style="color:var(--ref)">Sel</span></div>
-            <div class="kv"><span class="k" data-t="s2.k2">Infer the visible boundary and allocate points along it</span><span class="v" style="color:var(--ref)">Con</span></div>
-            <div class="kv"><span class="k" data-t="s2.k3">Serialise a closed ordered sequence of exactly N vertices</span><span class="v" style="color:var(--ref)">Legality</span></div>
-          </div>
-          <p class="figcap" style="margin-top:14px" data-th="s2.cap">Start point and traversal direction are unrestricted — filled-mask IoU is invariant to cyclic shift and reversal. Output allowances are non-binding: the longest legal answer is about <b>520 characters</b> against a tightest allowance of <b>1,280 tokens</b>.</p>
-        </div>
+        <p class="figcap" style="margin-top:14px" data-th="s2.cap">Start point and traversal direction are unrestricted — filled-mask IoU is invariant to cyclic shift and reversal. Output allowances are non-binding: the longest legal answer is about <b>520 characters</b> against a tightest allowance of <b>1,280 tokens</b>.</p>
       </div>
     </div>
   </div>

@@ -145,6 +145,15 @@ h3.sub{font-family:var(--disp);font-size:19px;font-weight:600;letter-spacing:-.0
 .figrow.even>*{display:flex;flex-direction:column}
 .figrow.even>*>.panel,.figrow.even>.panel{flex:1}
 .figrow.even .chartbody{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:330px}
+/* §02 — four cards share one row, the two panels beneath share the next, so
+   each pair is equal by construction rather than by hand-matched heights. */
+.s2row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.s2row>:nth-child(1){grid-area:1/1}
+.s2row>:nth-child(2){grid-area:1/2}
+.s2row>:nth-child(3){grid-area:2/1/auto/span 2}
+.s2row>:nth-child(4){grid-area:1/3}
+.s2row>:nth-child(5){grid-area:1/4}
+.s2row>:nth-child(6){grid-area:2/3/auto/span 2}
 .figcap{font-family:var(--mono);font-size:11px;line-height:1.7;letter-spacing:.03em;color:var(--dim);margin-top:12px}
 .figcap b{color:var(--muted);font-weight:600}
 
@@ -285,6 +294,9 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:20px 0}
   .hero-sub,.hero-lede{max-width:none}
   .figrow{grid-template-columns:1fr}
   .grid4{grid-template-columns:repeat(2,1fr)}
+  .s2row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .s2row>*{grid-area:auto}
+  .s2row>.panel{grid-column:span 2}
 }
 @media (max-width:1000px){
   .nav-links{position:fixed;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:rgba(7,9,11,.97);border-bottom:1px solid var(--line);padding:8px var(--pad) 14px;display:none;max-height:calc(100vh - 64px);overflow-y:auto}
@@ -299,6 +311,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:20px 0}
   .stat:nth-child(odd){border-left:0;padding-left:0}
   .stat:nth-child(n+3){border-top:1px solid var(--line)}
   .grid2,.grid3{grid-template-columns:1fr}
+  .s2row{grid-template-columns:minmax(0,1fr)}
+  .s2row>.panel{grid-column:span 1}
   .bar{grid-template-columns:104px minmax(0,1fr) 48px}
   body{font-size:16.5px}
   #hero-canvas{height:340px}#gap-canvas{height:320px}#algo-canvas{height:300px}
