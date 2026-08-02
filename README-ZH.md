@@ -146,6 +146,6 @@ uploads/          页面链接的论文 PDF
 
 ## 📄 引用与许可
 
-基准的引用元数据在代码发布包里（[CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)）。关联稿件仍在匿名评审期，因此本文档不虚构 DOI 或公开论文链接。
+基准的引用元数据在代码发布包里（[CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)）。本文档不虚构 DOI 或公开论文链接。
 
 本仓库采用 [MIT License](LICENSE)，[代码发布](https://github.com/Social-AI-2026/Groundbench-codebase)同样如此。COCO、RefCOCO 系列材料以及任何图的来源**不在其覆盖范围内**，仍适用各自条款。

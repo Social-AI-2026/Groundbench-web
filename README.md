@@ -171,8 +171,8 @@ together, and never commit credentials or private run artifacts.
 ## 📄 Citation and Licence
 
 Citation metadata for the benchmark is in the code release
-([CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)); the
-associated manuscript remains under anonymous review, so no DOI or public paper URL is asserted here.
+([CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)); no DOI or
+public paper URL is asserted here.
 
 This repository is released under the [MIT License](LICENSE), as is the
 [code release](https://github.com/Social-AI-2026/Groundbench-codebase). COCO, RefCOCO-family
