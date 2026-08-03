@@ -6,13 +6,13 @@
 </br>
 <em>The project site for an exact-N polygon grounding benchmark</em>
 
-[![Site](https://img.shields.io/badge/site-social--ai--2026.github.io-1baf7a?style=flat-square)](https://social-ai-2026.github.io/Groundbench-web/)
+[![Site](https://img.shields.io/badge/site-co--minder.github.io-1baf7a?style=flat-square)](https://co-minder.github.io/Groundbench/)
 [![Build](https://img.shields.io/badge/build-%E6%97%A0%20%C2%B7%20%E7%BA%AF%E9%9D%99%E6%80%81-e87ba4?style=flat-square)](#站点一览)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222222?style=flat-square&logo=github&logoColor=white)](https://pages.github.com/)
 [![Bilingual](https://img.shields.io/badge/i18n-EN%20%C2%B7%20%E4%B8%AD%E6%96%87-2563EB?style=flat-square)](#站点一览)
 [![Licence](https://img.shields.io/badge/license-MIT-7C3AED?style=flat-square)](LICENSE)
 
-[![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/Social-AI-2026/Groundbench-codebase)
+[![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/co-minder/Groundbench-codebase)
 [![Dataset](https://img.shields.io/badge/Project-%F0%9F%A4%97%20GroundBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Social-AI-2026/GroundBench)
 
 [English](./README.md) | [中文文档](./README-ZH.md)
@@ -23,7 +23,7 @@
 
 **GroundBench** 要求视觉语言系统把指代表达描述的目标**画成一个多边形**，且顶点数是给定的。给定图像、指代表达和顶点数 N，模型必须返回恰好 N 个有序顶点，也就是 2N 个数值。同一批 1,500 个项目会在五个顶点预算下各问一遍，图像、短语和指代对象保持不变，变的只有作答面。
 
-本仓库**只是项目主页**。评测代码在 [Groundbench-codebase](https://github.com/Social-AI-2026/Groundbench-codebase)，题目与参考答案作为冻结发布在 [`Social-AI-2026/GroundBench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench)。
+本仓库**只是项目主页**。评测代码在 [Groundbench-codebase](https://github.com/co-minder/Groundbench-codebase)，题目与参考答案作为冻结发布在 [`Social-AI-2026/GroundBench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench)。
 
 > **范围：**本仓库只承载展示层——页面结构、样式，以及页面用到的图。</br>
 > 它不跑任何评测、不含任何基准数据，**也不是**页面上任何一个数字的权威来源。
@@ -74,8 +74,8 @@
 #### 1. 克隆仓库
 
 ```bash
-git clone https://github.com/Social-AI-2026/Groundbench-web.git
-cd Groundbench-web
+git clone https://github.com/co-minder/Groundbench.git
+cd Groundbench
 ```
 
 #### 2. 起服务
@@ -107,7 +107,7 @@ Pages 从 `main` 构建并服务仓库根目录。`.nojekyll` 已提交，因此
 
 ## 📤 数字从哪来
 
-页面上每一个分数都由[代码发布包](https://github.com/Social-AI-2026/Groundbench-codebase)里的冻结评测协议产出。题目与参考答案是[数据仓](https://huggingface.co/datasets/Social-AI-2026/GroundBench)上发布的冻结材料，而数据仓本身**不含任何模型输出、也不含任何分数**——它是卷子和标准答案，不是谁的成绩单。
+页面上每一个分数都由[代码发布包](https://github.com/co-minder/Groundbench-codebase)里的冻结评测协议产出。题目与参考答案是[数据仓](https://huggingface.co/datasets/Social-AI-2026/GroundBench)上发布的冻结材料，而数据仓本身**不含任何模型输出、也不含任何分数**——它是卷子和标准答案，不是谁的成绩单。
 
 > 分数只有在那套冻结协议下才可比。prompt、图像处理、坐标映射和多边形后端，任何一项不同都会改变一个数字的含义。页面不得把来自另一条流水线的数字当成同一回事来展示。
 
@@ -148,6 +148,6 @@ uploads/          页面链接的论文 PDF
 
 ## 📄 引用与许可
 
-基准的引用元数据在代码发布包里（[CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)）。本文档不虚构 DOI 或公开论文链接。
+基准的引用元数据在代码发布包里（[CITATION.cff](https://github.com/co-minder/Groundbench-codebase/blob/main/CITATION.cff)）。本文档不虚构 DOI 或公开论文链接。
 
-本仓库采用 [MIT License](LICENSE)，[代码发布](https://github.com/Social-AI-2026/Groundbench-codebase)同样如此。COCO、RefCOCO 系列材料以及任何图的来源**不在其覆盖范围内**，仍适用各自条款。
+本仓库采用 [MIT License](LICENSE)，[代码发布](https://github.com/co-minder/Groundbench-codebase)同样如此。COCO、RefCOCO 系列材料以及任何图的来源**不在其覆盖范围内**，仍适用各自条款。

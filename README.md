@@ -6,13 +6,13 @@
 </br>
 <em>The project site for an exact-N polygon grounding benchmark</em>
 
-[![Site](https://img.shields.io/badge/site-social--ai--2026.github.io-1baf7a?style=flat-square)](https://social-ai-2026.github.io/Groundbench-web/)
+[![Site](https://img.shields.io/badge/site-co--minder.github.io-1baf7a?style=flat-square)](https://co-minder.github.io/Groundbench/)
 [![Build](https://img.shields.io/badge/build-none%20%C2%B7%20static-e87ba4?style=flat-square)](#site-at-a-glance)
 [![Deploy](https://img.shields.io/badge/deploy-GitHub%20Pages-222222?style=flat-square&logo=github&logoColor=white)](https://pages.github.com/)
 [![Bilingual](https://img.shields.io/badge/i18n-EN%20%C2%B7%20%E4%B8%AD%E6%96%87-2563EB?style=flat-square)](#site-at-a-glance)
 [![Licence](https://img.shields.io/badge/license-MIT-7C3AED?style=flat-square)](LICENSE)
 
-[![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/Social-AI-2026/Groundbench-codebase)
+[![Code](https://img.shields.io/badge/Project-Groundbench--codebase-1baf7a?style=flat-square&logo=github&logoColor=white)](https://github.com/co-minder/Groundbench-codebase)
 [![Dataset](https://img.shields.io/badge/Project-%F0%9F%A4%97%20GroundBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Social-AI-2026/GroundBench)
 
 [English](./README.md) | [中文文档](./README-ZH.md)
@@ -27,7 +27,7 @@ model must return exactly N ordered vertices, that is 2N numbers. The same 1,500
 five budgets, so only the answer surface changes while image, phrase, and referent stay fixed.
 
 This repository is the **project site** only. The evaluation code lives in
-[Groundbench-codebase](https://github.com/Social-AI-2026/Groundbench-codebase) and the questions and
+[Groundbench-codebase](https://github.com/co-minder/Groundbench-codebase) and the questions and
 reference targets are released as
 [`Social-AI-2026/GroundBench`](https://huggingface.co/datasets/Social-AI-2026/GroundBench).
 
@@ -84,8 +84,8 @@ Three pages, all bilingual through the nav toggle:
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Social-AI-2026/Groundbench-web.git
-cd Groundbench-web
+git clone https://github.com/co-minder/Groundbench.git
+cd Groundbench
 ```
 
 #### 2. Serve the Folder
@@ -121,7 +121,7 @@ with `_` survive and nothing is run through Jekyll.
 ## 📤 Where the Numbers Come From
 
 Every score shown on the page is produced by the frozen evaluation protocol in the
-[code release](https://github.com/Social-AI-2026/Groundbench-codebase). The questions and reference
+[code release](https://github.com/co-minder/Groundbench-codebase). The questions and reference
 targets are the frozen materials published on the
 [dataset repository](https://huggingface.co/datasets/Social-AI-2026/GroundBench), which itself
 carries **no model outputs and no scores** — it is the questions and the reference targets, not
@@ -175,9 +175,9 @@ together, and never commit credentials or private run artifacts.
 ## 📄 Citation and Licence
 
 Citation metadata for the benchmark is in the code release
-([CITATION.cff](https://github.com/Social-AI-2026/Groundbench-codebase/blob/main/CITATION.cff)); no DOI or
+([CITATION.cff](https://github.com/co-minder/Groundbench-codebase/blob/main/CITATION.cff)); no DOI or
 public paper URL is asserted here.
 
 This repository is released under the [MIT License](LICENSE), as is the
-[code release](https://github.com/Social-AI-2026/Groundbench-codebase). COCO, RefCOCO-family
+[code release](https://github.com/co-minder/Groundbench-codebase). COCO, RefCOCO-family
 material, and any figure sources are **not** covered by it and retain their own terms.
