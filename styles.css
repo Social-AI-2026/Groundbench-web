@@ -19,7 +19,6 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px;-webkit-text-size-adjust:100%}
-html.gated{overflow:hidden}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:17.5px;line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;opacity:.34;mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 78%)}
 img{max-width:100%;display:block}
@@ -273,19 +272,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-2);padding:20px 0}
 .foot .fn{color:var(--dim);opacity:.7}
 .foot a{color:var(--muted)}
 .foot a:hover{color:var(--ref)}
-
-/* gate */
-#gate{position:fixed;inset:0;z-index:200;background:var(--bg);display:grid;place-items:center;transition:opacity .35s}
-#gate.out{opacity:0;pointer-events:none}
-#gate form{width:min(400px,88vw);border:1px solid var(--line);background:var(--panel);border-radius:var(--r);padding:30px}
-#gate h1{font-size:19px;margin-bottom:8px}
-#gate p{font-size:13.5px;color:var(--muted);margin-bottom:20px}
-#gate input{width:100%;background:var(--bg-2);border:1px solid var(--line-2);border-radius:var(--r);padding:11px 13px;color:var(--ink);font-family:var(--mono);font-size:13px;outline:0}
-#gate input:focus{border-color:var(--ref)}
-#gate button{width:100%;margin-top:10px;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:11px;border:0;border-radius:var(--r);background:var(--ref);color:#04120E;cursor:pointer}
-#gate .err{opacity:0;color:var(--pred);font-family:var(--mono);font-size:11.5px;margin:10px 0 0;transition:opacity .2s}
-@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
-#gate form.shake{animation:shake .5s}
 
 /* ============================== RESPONSIVE =============================== */
 @media (max-width:1080px){

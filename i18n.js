@@ -4,10 +4,6 @@
     'nav.gap': '总览', 'nav.task': '任务', 'nav.targets': '目标', 'nav.cohort': '题库',
     'nav.results': '结果', 'nav.findings': '发现', 'nav.try': '动手试', 'nav.explorer': '数据浏览', 'nav.cite': '引用',
 
-    'gate.eyebrow': 'GroundBench · 内部预览', 'gate.title': '需要访问口令',
-    'gate.sub': '项目页面开发中。输入访问口令后继续。', 'gate.ph': '口令',
-    'gate.btn': '进入', 'gate.err': '口令不正确。',
-
     'hero.eyebrow': '基准测试 · 2026 · 1,500 题 × 5 个顶点预算',
     'hero.sub': '多分辨率多边形定位，暴露视觉—语言模型的几何能力缺口。',
     'hero.lede': 'RefCOCO 系列定位任务上的边界框分数已难以区分前沿系统，而框本身丢弃了形状。我们把同样的 <strong>1,500 组 图像–指代表达–指代对象</strong> 三元组重新对准到五个顶点预算下的 exact-<em>N</em> 多边形，并在同一个固定分母下分别审计填充区域 IoU 与合法多边形完成率。',

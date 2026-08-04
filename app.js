@@ -36,7 +36,6 @@
   });
   revealVisible();
   addEventListener('load', revealVisible);
-  addEventListener('gb:unlock', revealVisible);
   addEventListener('scroll', revealVisible, { passive: true });
   setTimeout(revealVisible, 600);
   // Last resort: if nothing ever reported in, drop the effect rather than
@@ -171,7 +170,6 @@
     // Paint one frame synchronously so the figure is never blank, then let
     // rAF drive it (some embedded viewers throttle rAF until first paint).
     frame(performance.now());
-    addEventListener('gb:unlock', () => frame(performance.now()));
   })();
 
   /* ============================ GAP CANVAS =============================== */
@@ -223,7 +221,7 @@
     sl.addEventListener('input', () => { N = D.budgets[+sl.value]; nv.textContent = 'N = ' + N; draw(); });
     addEventListener('resize', draw);
     RERENDER.push(draw);
-    setTimeout(draw, 40); addEventListener('gb:unlock', () => setTimeout(draw, 60));
+    setTimeout(draw, 40);
   })();
 
   /* =========================== ALGORITHM CANVAS ========================== */
@@ -304,7 +302,6 @@
     chips($('#algo-chips'), D.budgets.map(n => ({ label: 'N = ' + n, v: n })), 16, n => { target = n; run(); });
     addEventListener('resize', draw);
     RERENDER.push(draw);
-    addEventListener('gb:unlock', () => setTimeout(run, 60));
   })();
 
   /* ============================ FIDELITY BARS ============================ */
@@ -390,7 +387,7 @@
     }
     chips($('#curve-metric'), [{ label: 'IoU²', v: 'iou2' }, { label: 'Acc@.5', v: 'a50' }, { label: 'Acc@.7', v: 'a70' }, { label: 'IoUn', v: 'ioun' }], 'iou2', v => { metric = v; draw(); });
     addEventListener('resize', draw);
-    setTimeout(draw, 40); addEventListener('gb:unlock', () => setTimeout(draw, 60));
+    setTimeout(draw, 40);
   })();
 
 })();
